@@ -22,7 +22,7 @@ cask "freshkube" do
     end
   end
 
-  depends_on macos: ">= :sequoia"
+  depends_on macos: :sequoia
 
   app "Freshkube.app"
   binary "#{appdir}/Freshkube.app/Contents/MacOS/freshkube"
