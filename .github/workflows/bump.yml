@@ -1,0 +1,37 @@
+name: Bump casks
+
+# Freshkube's releases are drafted from main's bundles and published by a
+# person. This picks up a published release within a few hours, or at once
+# when run by hand, and commits the new version and checksums.
+on:
+  schedule:
+    - cron: '17 */3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bump
+  cancel-in-progress: false
+
+jobs:
+  freshkube:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Point the cask at the newest release
+        id: bump
+        run: echo "version=$(scripts/bump-freshkube.sh)" >> "$GITHUB_OUTPUT"
+
+      - name: Commit
+        if: steps.bump.outputs.version != ''
+        env:
+          VERSION: ${{ steps.bump.outputs.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "freshkube $VERSION"
+          git push
