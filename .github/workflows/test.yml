@@ -1,0 +1,39 @@
+name: Test casks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  freshkube:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-15, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Tap this checkout
+        run: |
+          brew update --quiet
+          brew tap skel84/tap "$GITHUB_WORKSPACE"
+
+      - name: Style and audit
+        run: |
+          brew style skel84/tap
+          brew audit --cask --strict --online skel84/tap/freshkube
+
+      - name: Install, run and uninstall
+        run: |
+          brew install --cask skel84/tap/freshkube
+          test -d /Applications/Freshkube.app
+          freshkube --version | tee version.txt
+          grep -qF "$(sed -n 's/^  version "\(.*\)"$/\1/p' Casks/freshkube.rb)" version.txt
+          brew uninstall --zap --cask skel84/tap/freshkube
+          test ! -e /Applications/Freshkube.app
