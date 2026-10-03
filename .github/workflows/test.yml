@@ -27,7 +27,8 @@ jobs:
       - name: Style and audit
         run: |
           brew style --cask skel84/tap/freshkube
-          brew audit --cask --strict --online skel84/tap/freshkube
+          # Freshkube publishes every release as a pre-release.
+          brew audit --cask --strict --online --except=github_prerelease_version skel84/tap/freshkube
 
       - name: Install, run and uninstall
         run: |
