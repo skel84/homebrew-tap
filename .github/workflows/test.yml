@@ -16,6 +16,8 @@ jobs:
         os: [macos-15, macos-15-intel]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
+    env:
+      HOMEBREW_GITHUB_API_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
 
