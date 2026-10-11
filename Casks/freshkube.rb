@@ -1,9 +1,9 @@
 cask "freshkube" do
   arch arm: "aarch64", intel: "x86_64"
 
-  version "0.13.0"
-  sha256 arm:   "e57edc551911a1285d81b18bde649a1dd1f1636a504a2d0a92b22db6aa008962",
-         intel: "5c083f4ee9f0abd8717585df621cdc1b95e3465e06be3db76f8394d0fc4f9fcc"
+  version "0.14.0"
+  sha256 arm:   "3c265d252b6f7fe7a7d3c0804bc12d4e8180ceea0a818a1a2fa12377f4feed89",
+         intel: "8679272c44af78799996cbbd01bd80a7707ce292365cbe309dd0630c0dca600d"
 
   url "https://github.com/skel84/freshkube/releases/download/v#{version}/Freshkube-#{version}-#{arch}-apple-darwin-adhoc.zip"
   name "Freshkube"
