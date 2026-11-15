@@ -25,6 +25,7 @@ jobs:
         run: |
           brew update --quiet
           brew tap skel84/tap "$GITHUB_WORKSPACE"
+          brew trust --tap skel84/tap
 
       - name: Style and audit
         run: |

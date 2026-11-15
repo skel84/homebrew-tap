@@ -3,8 +3,12 @@
 Homebrew casks for [Freshkube](https://github.com/skel84/freshkube), a native macOS app for Talos Linux and Kubernetes clusters.
 
 ```sh
+brew tap skel84/tap
+brew trust --tap skel84/tap
 brew install --cask skel84/tap/freshkube
 ```
+
+Homebrew loads casks only from taps you trust, so `brew trust` comes before the first install.
 
 This installs `Freshkube.app` in `/Applications` and links the `freshkube` command. Freshkube needs macOS 15 or later, on Apple silicon or Intel. `brew upgrade --cask freshkube` updates it, and `brew uninstall --zap --cask freshkube` also removes its preferences and operation audit files.
 
