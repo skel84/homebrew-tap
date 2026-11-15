@@ -24,7 +24,11 @@ jobs:
 
       - name: Point the cask at the newest release
         id: bump
-        run: echo "version=$(scripts/bump-freshkube.sh)" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(scripts/bump-freshkube.sh)
+          echo "version=$version" >> "$GITHUB_OUTPUT"
 
       - name: Commit
         if: steps.bump.outputs.version != ''
