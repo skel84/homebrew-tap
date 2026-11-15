@@ -7,7 +7,9 @@ set -euo pipefail
 repo=skel84/freshkube
 cask="$(dirname "$0")/../Casks/freshkube.rb"
 
-tag=$(curl -fsSL "https://api.github.com/repos/$repo/releases?per_page=20" |
+auth=()
+[ -z "${GH_TOKEN:-}" ] || auth=(-H "Authorization: Bearer $GH_TOKEN")
+tag=$(curl -fsSL ${auth[@]+"${auth[@]}"} "https://api.github.com/repos/$repo/releases?per_page=20" |
   python3 -c 'import json, sys
 releases = [r for r in json.load(sys.stdin) if not r["draft"]]
 print(releases[0]["tag_name"] if releases else "")')
